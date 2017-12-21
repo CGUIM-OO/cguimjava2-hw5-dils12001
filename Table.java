@@ -65,8 +65,7 @@ public class Table {
 				hit = p.hit_me(this); // this
 				if (hit) {
 
-					System.out
-							.println("Hit! " + p.getName() + "¡¦s cards now: ");
+					System.out.println("Hit! " + p.getName() + "¡¦s cards now: ");
 					temp2.add(allcards.getOneCard(true));
 					p.setOneRoundCard(temp2);
 					for (Card c : p.getOneRoundCard()) {
@@ -76,7 +75,11 @@ public class Table {
 
 			} while (hit);
 			System.out.println(p.getName() + ", Pass hit!");
-
+			System.out.println("Hit! " + p.getName() + "¡¦s cards now: ");
+			for (Card c : p.getOneRoundCard()) {
+				c.printCard();
+			}
+			System.out.println(p.getName() + "'s Hit is over!");
 		}
 	}
 
@@ -124,7 +127,8 @@ public class Table {
 			if (win == 2) {
 				int b = player.makeBet();
 				player.increaseChips(player.makeBet());
-				System.out.println(",Get " + b + " Chips, the Chips now is: "
+				System.out.println(",Get " + b
+						+ " Chips, the Chips now is: "
 						+ player.getCurrentChips());
 			}
 			if (win == 0) {
