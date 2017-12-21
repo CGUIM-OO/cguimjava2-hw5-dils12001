@@ -19,7 +19,7 @@ public class Table {
 	public Player[] get_player() {
 		return players;
 	}
-	
+
 	public void set_dealer(Dealer d) {
 		dealer = d;
 	}
@@ -29,9 +29,12 @@ public class Table {
 	}
 
 	private void ask_each_player_about_bets() {
+		pos_betArray = new int[get_player().length];
+		int i = 0;
 		for (Player p : get_player()) {
 			p.sayHello();
-			p.makeBet();
+			pos_betArray[i] = p.makeBet();
+			i++;
 		}
 	}
 
@@ -47,45 +50,45 @@ public class Table {
 		temp1.add(allcards.getOneCard(false));
 		dealer.setOneRoundCard(temp1);
 		System.out.print("Dealer's face up card is ");
-		dealer.getOneRoundCard().get(1).printCard();;
+		dealer.getOneRoundCard().get(1).printCard();
+		;
 	}
 
 	private void ask_each_player_about_hits() {
-		
+
 		for (Player p : get_player()) {
 			ArrayList<Card> temp2 = p.getOneRoundCard();
 			boolean hit = false;
 			do {
 				if (p.getTotalValue() > 21)
 					break;
-				System.out.println("fuck"+p.getTotalValue()+p.hit_me(this));
 				hit = p.hit_me(this); // this
 				if (hit) {
-					
-					System.out.println("Hit! " + p.getName() + "¡¦s cards now: ");
+
+					System.out
+							.println("Hit! " + p.getName() + "¡¦s cards now: ");
 					temp2.add(allcards.getOneCard(true));
 					p.setOneRoundCard(temp2);
 					for (Card c : p.getOneRoundCard()) {
 						c.printCard();
 					}
-				} 
+				}
 
 			} while (hit);
 			System.out.println(p.getName() + ", Pass hit!");
-					
-					
+
 		}
 	}
 
 	private void ask_dealer_about_hits() {
 		boolean hit = false;
 		ArrayList<Card> temp3 = dealer.getOneRoundCard();
-		do {System.out.print(dealer.hit_me(this));
-			hit = dealer.hit_me(this); 
+		do {
+			hit = dealer.hit_me(this);
 			if (hit) {
 				temp3.add(allcards.getOneCard(true));
 				dealer.setOneRoundCard(temp3);
-			} 
+			}
 		} while (hit);
 		System.out.println("Dealer's hit is over!");
 	}
@@ -112,27 +115,27 @@ public class Table {
 				if (p == d)
 					win = 0;
 			}
-			if (win == 1){
+			if (win == 1) {
+				int b = player.makeBet();
 				player.increaseChips(-player.makeBet());
-				System.out.println(", Loss " + player.makeBet()
-						+ " Chips, the Chips now is: "
+				System.out.println(", Loss " + b + " Chips, the Chips now is: "
 						+ player.getCurrentChips());
-				}
-			if (win == 2){
+			}
+			if (win == 2) {
+				int b = player.makeBet();
 				player.increaseChips(player.makeBet());
-				System.out.println(",Get " + player.makeBet()
-						+ " Chips, the Chips now is: "
-						+ player.getCurrentChips());}
-			if (win == 0)
+				System.out.println(",Get " + b + " Chips, the Chips now is: "
+						+ player.getCurrentChips());
+			}
+			if (win == 0) {
 				System.out.println(",chips have no change! The Chips now is: "
 						+ player.getCurrentChips());
+			}
 		}
 	}
 
 	public int[] get_palyers_bet() {
-		pos_betArray = new int[get_player().length];
-		for (int i = 0; i < get_player().length; i++)
-			pos_betArray[i] = players[i].makeBet();
+
 		return pos_betArray;
 	}
 
